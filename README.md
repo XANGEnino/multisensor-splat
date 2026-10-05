@@ -54,7 +54,7 @@ Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
    uv run jupyter lab
    ```
 
-   Notebook 01 needs no data. Notebook 02 hardcodes `base_dir` in its first code cell to an absolute path (`C:\Dev\Privat\multisensor-splat\data\kitti`). Change it to the `data/kitti` folder of your checkout.
+   Notebook 01 needs no data. Notebook 02 reads the data from `data/kitti` via a path relative to the `notebooks/` folder, so no path changes should be needed.
 
 4. **Run the tests** (optional)
 
