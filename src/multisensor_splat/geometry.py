@@ -52,6 +52,8 @@ def unproject(uv, depth, K):
     return (to_homogeneous(uv) @ K_inv.T) * depth[:, None]
 
 def in_image_mask(uv, depth, width, height):
+    uv = np.asarray(uv).reshape(-1, 2)
+    depth = np.asarray(depth).reshape(-1)
     mask = (depth > 0) & ((uv >= 0) & (uv < np.array([width, height]))).all(axis=-1)
     return mask
 
