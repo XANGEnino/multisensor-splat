@@ -18,8 +18,8 @@ def test_transform():
  
  
 def test_projection():
-    pixels = project(POINTS, K)
-    np.testing.assert_allclose(unproject(pixels, POINTS[:, 2], K), POINTS, atol=1e-9)
+    uv, depth = project(POINTS, K)
+    np.testing.assert_allclose(unproject(uv, depth[:, 0], K), POINTS, atol=1e-9)
  
  
 def test_look_at():
