@@ -16,6 +16,10 @@ def load_scan(data, idx):
     pts, reflectance = velo[:, :3], velo[:, 3]
     return pts, reflectance
 
+def load_image(data, idx, cam):
+    img = getattr(data, f"get_cam{cam}")(idx)
+    return np.asarray(img)
+
 def get_lidar_to_camera(calib, cam):
     return getattr(calib, f"T_cam{cam}_velo"), getattr(calib, f"K_cam{cam}")
 
@@ -36,7 +40,6 @@ def project_lidar(data, idx, cam):
     pts_cam = lidar_to_camera(pts, T_cam_velo)
     uv, depth = project_to_image(pts_cam, K_cam)
 
-    img = getattr(data, f"get_cam{cam}")(idx)
-    width, height = img.size
-    uv, depth, reflectance = filter_visible((width, height), uv, depth, reflectance)
+    img = load_image(data, idx, cam)
+    uv, depth, reflectance = filter_visible((img.shape[1], img.shape[0]), uv, depth, reflectance)
     return img, uv, depth, reflectance
